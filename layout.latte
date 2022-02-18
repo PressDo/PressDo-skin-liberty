@@ -68,12 +68,12 @@
             <div class="input-group">
                 <input type="search" name="q" placeholder="검색" accesskey="f" class="form-control" id="searchInput" autocomplete="off">
                 <span class="input-group-btn">
-                    <button type="submit" name="go" value="보기" id="searchGoButton" class="btn btn-secondary"><span class="fa fa-eye"></span></button>
-                    <button type="submit" name="fulltext" value="검색" id="searchSearchButton" class="btn btn-secondary"><span class="fa fa-search"></span></button>
+                    <button type="submit" name="go" value="보기" id="searchGoButton" class="btn btn-secondary" onclick="onClickGo"><span class="fa fa-eye"></span></button>
+                    <button type="submit" name="fulltext" value="검색" id="searchSearchButton" class="btn btn-secondary" onclick="return onClickSearch()"><span class="fa fa-search"></span></button>
                 </span>
             </div>
             <div n:if="$show" class="v-autocomplete-list">
-                <div n:foreach="$internalItems as $item => $i" class="v-autocomplete-list-item" @click="onClickItem(item)" :class="{'v-autocomplete-item-active': i === cursor}" @mouseover="cursor = i">
+                <div n:foreach="$internalItems as $item => $i" class="v-autocomplete-list-item" onclick="onClickItem(item)" :class="{'v-autocomplete-item-active': i === cursor}" onmouseover="cursor = i">
                     <div>{$item}</div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                     </ul>
                 </div>
                 <div class="live-recent-content">
-                    <ul class = "live-recent-list" id="live-recent-list">
+                    <ul class="live-recent-list" id="live-recent-list">
                         <li><span class="recent-item">&nbsp;</span></li>
                         <li><span class="recent-item">&nbsp;</span></li>
                         <li><span class="recent-item">&nbsp;</span></li>
@@ -103,6 +103,8 @@
                         <li><span class="recent-item">&nbsp;</span></li>
                         <li><span class="recent-item">&nbsp;</span></li>
                         <li><span class="recent-item">&nbsp;</span></li>
+                        
+                        <li v-for="(r,i) in recent" v-bind:key="i"><nuxt-link class="recent-item" v-bind:key="r.document" :to="doc_action_link(r.document, 'w')">[<local-date :date="r.date" format="H:i:s" />] </nuxt-link></li>
                     </ul>
                 </div>
                 <div class="live-recent-footer">
@@ -154,24 +156,20 @@
             </div>
         </div>
         <div class="liberty-content-main wiki-article">
-            {if $wiki->session->member && $wiki->session->member->user_document_discuss && $wiki->config->hide_user_document_discuss}
-                <div class="alert alert-info fade in" id="userDiscussAlert" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Close</span>
-                    </button>
-                    {$wiki->lang->msg->user_thread_exists|replace: '@1@', $wiki->uri->discuss . $wiki->member->userdoc}
-                </div>
-            {/if}
+            <div n:if="$wiki->session->member && $wiki->session->member->user_document_discuss && $wiki->config->hide_user_document_discuss !== $wiki->session->member->user_document_discuss" class="alert alert-info fade in" id="userDiscussAlert" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                {$wiki->lang->msg->user_thread_exists|replace: '@1@', '/discuss/'.rawurlencode($wiki->session->member->username)}
+            </div>
             {$wiki->skin->inner_layout|noescape}{$wiki->skin->inner_block|noescape}
         </div>
         <div class="liberty-footer" id="bottom">
-        {if $wiki->page->view_name == 'wiki' && $wiki->page->data->date}
-            <ul class="footer-info">
+            <ul class="footer-info" n:if="$wiki->page->view_name === 'wiki' && $wiki->page->data->date">
                 <li class="footer-info-lastmod">{$wiki->lang->document->lastchanged|replace: '@1@', '<time datetime="'.date("Y-m-d\TH:i:s", $wiki->page->data->date - 32400).'.000Z'.'">'.date("Y-m-d H:i:s", $wiki->page->data->date).'</time>'|noescape}</li>
                 <li class="footer-info-copyright">{$wiki->config->copyright_text|noescape}</li>
             </ul>
-        {/if}
             <ul class="footer-places">
             {*
                 <li class="footer-places-privacy"><a href="https://librewiki.net/wiki/%EB%A6%AC%EB%B8%8C%EB%A0%88_%EC%9C%84%ED%82%A4:%EA%B0%9C%EC%9D%B8_%EC%A0%95%EB%B3%B4_%EC%A0%95%EC%B1%85" title="리브레 위키:개인 정보 정책">개인 정보 정책</a></li>
