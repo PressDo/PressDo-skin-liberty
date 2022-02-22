@@ -5,60 +5,59 @@
         <a class="navbar-brand" href="/">PressDoWiki</a>
         <ul class="nav navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/RecentChanges"><span class="fa fa-refresh"></span><span class="hide-title">{$wiki->lang->menu->RecentChanges}</span></a>
+                <a class="nav-link" href="/RecentChanges"><span class="fa fa-refresh"></span><span class="hide-title">{$lang['menu']['RecentChanges']}</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/RecentDiscuss"><span class="fa fa-comments"></span><span class="hide-title">{$wiki->lang->menu->RecentDiscuss}</span></a>
+                <a class="nav-link" href="/RecentDiscuss"><span class="fa fa-comments"></span><span class="hide-title">{$lang['menu']['RecentDiscuss']}</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/random"><span class="fa fa-random"></span><span class="hide-title">{$wiki->lang->menu->random}</span></a>
+                <a class="nav-link" href="/random"><span class="fa fa-random"></span><span class="hide-title">{$lang['menu']['random']}</span></a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle dropdown-toggle-fix" href="#" data-toggle="dropdown" aria-expanded="false">
-                    <span class="fa fa-gear"></span><span class="hide-title">{$wiki->lang->menu->tools}</span>
+                    <span class="fa fa-gear"></span><span class="hide-title">{$lang['menu']['tools']}</span>
                 </a>
                 <div class="dropdown-menu" role="menu">
-                    <a href="/NeededPages" class="dropdown-item">{$wiki->lang->page->NeededPages}</a>
-                    <a href="/OrphanedPages" class="dropdown-item">{$wiki->lang->page->OrphanedPages}</a>
-                    <a href="/OldPages" class="dropdown-item">{$wiki->lang->page->OldPages}</a>
-                    <a href="/ShortestPages" class="dropdown-item">{$wiki->lang->page->ShortestPages}</a>
-                    <a href="/LongestPages" class="dropdown-item">{$wiki->lang->page->LongestPages}</a>
-                    <a href="/BlockHistory" class="dropdown-item">{$wiki->lang->page->BlockHistory}</a>
-                    <a href="/RandomPage" class="dropdown-item">{$wiki->lang->page->RandomPage}</a>
-                    <a href="/Upload" class="dropdown-item">{$wiki->lang->page->Upload}</a>
-                    <a href="/License" class="dropdown-item">{$wiki->lang->page->License}</a>
+                    <a href="/NeededPages" class="dropdown-item">{$lang['page']['NeededPages']}</a>
+                    <a href="/OrphanedPages" class="dropdown-item">{$lang['page']['OrphanedPages']}</a>
+                    <a href="/OldPages" class="dropdown-item">{$lang['page']['OldPages']}</a>
+                    <a href="/ShortestPages" class="dropdown-item">{$lang['page']['ShortestPages']}</a>
+                    <a href="/LongestPages" class="dropdown-item">{$lang['page']['LongestPages']}</a>
+                    <a href="/BlockHistory" class="dropdown-item">{$lang['page']['BlockHistory']}</a>
+                    <a href="/RandomPage" class="dropdown-item">{$lang['page']['RandomPage']}</a>
+                    <a href="/Upload" class="dropdown-item">{$lang['page']['Upload']}</a>
+                    <a href="/License" class="dropdown-item">{$lang['page']['License']}</a>
                     <a to="#" @click.prevent="$modal.show('theseed-setting');" class="dropdown-item">설정</a>
-                    {var $sessionArray = json_decode(json_encode($wiki->session), true)}
-                    {if count($sessionArray['menus']) > 0}
-                            <a n:foreach="$sessionArray['menus'] as $m" href="{$m['l']}" class="dropdown-item">{$m['t']}</a>
+                    {if count($wiki['session']['menus']) > 0}
+                            <a n:foreach="$wiki['session']['menus'] as $m" href="{$m['l']}" class="dropdown-item">{$m['t']}</a>
                     {/if}
                 </div>
             </li>
         </ul>
         <div class="navbar-login">
-            {if $wiki->session->member}
+            {if $wiki['session']['member']}
                 <div class="dropdown login-menu">
                     <a class="dropdown-toggle" type="button" id="login-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="profile-img" src="{$wiki->session->member->gravatar_url}">
+                        <img class="profile-img" src="{$wiki['session']['member']['gravatar_url']}">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right login-dropdown-menu" aria-labelledby="login-menu">
-                        <a href="/w/{rawurlencode($wiki->namespaces->user.':'.$wiki->member->username)}" class="dropdown-item">{$wiki->member->username}</a>
+                        <a href="/w/{rawurlencode($namespace['user'].':'.$wiki['session']['member']['username'])}" class="dropdown-item">{$wiki['session']['member']['username']}</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/contribution/author/{$wiki->session->member->username}/document">{$wiki->lang->page->contribution_document}</a>
-                        <a class="dropdown-item" href="/contribution/author/{$wiki->session->member->username}/discuss">{$wiki->lang->page->contribution_discuss}</a>
+                        <a class="dropdown-item" href="/contribution/author/{$wiki['session']['member']['username']}/document">{$lang['page']['contribution_document']}</a>
+                        <a class="dropdown-item" href="/contribution/author/{$wiki['session']['member']['username']}/discuss">{$lang['page']['contribution_discuss']}</a>
                         <div class="dropdown-divider"></div>
-                        <a href="/member/mypage" class="dropdown-item">{$wiki->lang->page->mypage}</a>
+                        <a href="/member/mypage" class="dropdown-item">{$lang['page']['mypage']}</a>
                         <div class="dropdown-divider"></div>
-                        <a href="/member/starred_documents" class="dropdown-item">{$wiki->lang->page->starred_documents}</a>
+                        <a href="/member/starred_documents" class="dropdown-item">{$lang['page']['starred_documents']}</a>
                         <div class="dropdown-divider view-logout"></div>
-                        <a href="/member/logout?redirect=$wiki->request_uri" class="dropdown-item view-logout">{$wiki->lang->auth->logout}</a>
+                        <a href="/member/logout?redirect=$wiki->request_uri" class="dropdown-item view-logout">{$lang-['auth']['logout']}</a>
                     </div>
                 </div>
-                <a href="/member/logout?redirect={$wiki->request_uri}" class="hide-logout logout-btn"><span class="fa fa-sign-out"></span></a>
+                <a href="/member/logout?redirect={$uri}" class="hide-logout logout-btn"><span class="fa fa-sign-out"></span></a>
             {else}
-            <a href="/member/login?redirect={$wiki->request_uri}" class="none-outline">
-                <span class="fa fa-sign-in"></span>
-            </a>
+                <a href="/member/login?redirect={$uri}" class="none-outline">
+                    <span class="fa fa-sign-in"></span>
+                </a>
             {/if}
         </div>
         <div id="pt-notifications" class="navbar-notification">
@@ -68,8 +67,8 @@
             <div class="input-group">
                 <input type="search" name="q" placeholder="검색" accesskey="f" class="form-control" id="searchInput" autocomplete="off">
                 <span class="input-group-btn">
-                    <button type="submit" name="go" value="보기" id="searchGoButton" class="btn btn-secondary" onclick="onClickGo"><span class="fa fa-eye"></span></button>
-                    <button type="submit" name="fulltext" value="검색" id="searchSearchButton" class="btn btn-secondary" onclick="return onClickSearch()"><span class="fa fa-search"></span></button>
+                    <button type="button" name="go" value="보기" id="searchGoButton" class="btn btn-secondary" onclick="onClickGo()"><span class="fa fa-eye"></span></button>
+                    <button type="button" name="fulltext" value="검색" id="searchSearchButton" class="btn btn-secondary" onclick="onClickSearch()"><span class="fa fa-search"></span></button>
                 </span>
             </div>
             <div n:if="$show" class="v-autocomplete-list">
@@ -114,36 +113,35 @@
     </div>
     <div class="container-fluid liberty-content">
         <div class="liberty-content-header">
-            {if $wiki->page->data->document}
+            {if $wiki['page']['data']['document']}
             <div class="content-tools">
                 <div class="btn-group" role="group" aria-label="content-tools">
-                    <a href="/w/{rawurlencode($wiki->page->full_title)}" class="btn btn-secondary tools-btn">{$wiki->lang->btn->document}</a>
-                    <a href="/edit/{rawurlencode($wiki->page->full_title)}" class="btn btn-secondary tools-btn">{$wiki->lang->btn->edit}</a>
-                    <a href="/discuss/{rawurlencode($wiki->page->full_title)}" class="btn btn-secondary tools-btn">{$wiki->lang->btn->discuss}</a>
-                    <a href="/history/{rawurlencode($wiki->page->full_title)}" class="btn btn-secondary tools-btn">{$wiki->lang->btn->history}</a>
+                    <a href="/w/{rawurlencode($wiki['page']['full_title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['document']}</a>
+                    <a href="/edit/{rawurlencode($wiki['page']['full_title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['edit']}</a>
+                    <a href="/discuss/{rawurlencode($wiki['page']['full_title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['discuss']}</a>
+                    <a href="/history/{rawurlencode($wiki['page']['full_title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['history']}</a>
                     <button type="button" class="btn btn-secondary tools-btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="caret"></span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                        <a href="/backlink/{rawurlencode($wiki->page->full_title)}" class="dropdown-item">{$wiki->lang->btn->backlink}</a>
-                        <a href="/delete/{rawurlencode($wiki->page->full_title)}" class="dropdown-item">{$wiki->lang->btn->delete}</a>
-                        <a href="/move/{rawurlencode($wiki->page->full_title)}" class="dropdown-item">{$wiki->lang->btn->move}</a>
-                        <a href="/acl/{rawurlencode($wiki->page->full_title)}" class="dropdown-item">{$wiki->lang->btn->ACL}</a>
-                        <a href="/contribution/author/{rawurlencode($wiki->page->data->document->title)}" class="dropdown-item">{$wiki->lang->page->contribution}</nuxt-link>
-                        {if $wiki->page->data->starred}
-                            <a href="/member/unstar/{rawurlencode($wiki->page->full_title)}" class="dropdown-item">
+                        <a href="/backlink/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">{$lang['btn']['backlink']}</a>
+                        <a href="/delete/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">{$lang['btn']['delete']}</a>
+                        <a href="/move/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">{$lang['btn']['move']}</a>
+                        <a href="/acl/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">{$lang['btn']['ACL']}</a>
+                        <a n:if="$wiki['page']['data']['user']" href="/contribution/author/{rawurlencode($wiki['page']['data']['document']['title'])}/document" class="dropdown-item">{$lang['page']['contribution']}</a>
+                        {if $wiki['page']['data']['starred']}
+                            <a href="/member/unstar/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">
                                 <span class="fa fa-star"></span>
-                                <span class="star-count">{$wiki->page->data??->star_count}</span>
+                                <span class="star-count">{$wiki['page']['data']['star_count']}</span>
                             </a>
                         {else}
-                            <a href="/member/star/{rawurlencode($wiki->page->full_title)}" class="dropdown-item">
+                            <a href="/member/star/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">
                                 <span class="fa fa-star-o"></span>
-                                <span class="star-count">{$wiki->page->data??->star_count}</span>
+                                <span class="star-count">{$wiki['page']['data']['star_count']}</span>
                             </a>
                         {/if}
-                        {var $menuArray = json_decode(json_encode($wiki->page->data->menus),true)}
-                        {if $menuArray}
-                            <a n:foreach="$menuArray as $m" href="$m['to']" class="dropdown-item">{$m['title']}</a>
+                        {if $wiki['page']['data']['menus']}
+                            <a n:foreach="$wiki['page']['data']['menus'] as $m" href="$m['to']" class="dropdown-item">{$m['title']}</a>
                         {/if}
                     </div>
                 </div>
@@ -151,24 +149,24 @@
             {/if}
             <div class="title">
                 <h1>
-                    {$wiki->page->full_title}
+                    {$wiki['page']['full_title']}
                 </h1>
             </div>
         </div>
         <div class="liberty-content-main wiki-article">
-            <div n:if="$wiki->session->member && $wiki->session->member->user_document_discuss && $wiki->config->hide_user_document_discuss !== $wiki->session->member->user_document_discuss" class="alert alert-info fade in" id="userDiscussAlert" role="alert">
+            <div n:if="$wiki['session']['member'] && $wiki['session']['member']['user_document_discuss'] && $config['hide_user_document_discuss'] !== $wiki['session']['member']['user_document_discuss']" class="alert alert-info fade in" id="userDiscussAlert" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     <span class="sr-only">Close</span>
                 </button>
-                {$wiki->lang->msg->user_thread_exists|replace: '@1@', '/discuss/'.rawurlencode($wiki->session->member->username)}
+                {$lang['msg']['user_thread_exists']|replace: '@1@', '/discuss/'.rawurlencode($wiki['session']['member']['username'])}
             </div>
-            {$wiki->skin->inner_layout|noescape}{$wiki->skin->inner_block|noescape}
+            {$innerLayout|noescape}{$innerBlock|noescape}
         </div>
         <div class="liberty-footer" id="bottom">
-            <ul class="footer-info" n:if="$wiki->page->view_name === 'wiki' && $wiki->page->data->date">
-                <li class="footer-info-lastmod">{$wiki->lang->document->lastchanged|replace: '@1@', '<time datetime="'.date("Y-m-d\TH:i:s", $wiki->page->data->date - 32400).'.000Z'.'">'.date("Y-m-d H:i:s", $wiki->page->data->date).'</time>'|noescape}</li>
-                <li class="footer-info-copyright">{$wiki->config->copyright_text|noescape}</li>
+            <ul class="footer-info" n:if="$wiki->page->view_name === 'wiki' && $wiki['page']['data']['date']">
+                <li class="footer-info-lastmod">{$lang-['document']['lastchanged']|replace: '@1@', '<time datetime="'.date("Y-m-d\TH:i:s", $wiki['page']['data']['date'] - 32400).'.000Z'.'">'.date("Y-m-d H:i:s", $wiki['page']['data']['date']).'</time>'|noescape}</li>
+                <li class="footer-info-copyright">{$config['copyright_text']|noescape}</li>
             </ul>
             <ul class="footer-places">
             {*
