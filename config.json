@@ -8,6 +8,7 @@
 		"css/font/Noto Sans KR.css",
 		"css/default.css",
 		"css/theseed.css",
+		"css/dark.css",
 		"css/jquery-ui.min.css",
 		"bootstrap/css/bootstrap.min.css",
 		"bootstrap/js/bootstrap.min.js",
@@ -38,7 +39,8 @@
 			"bootstrap/css/bootstrap.min.css",
 			"css/font/Noto Sans KR.css",
 			"css/default.css",
-			"css/theseed.css"
+			"css/theseed.css",
+			"css/dark.css"
 		]
 	},
 	"manual_file_targets": {

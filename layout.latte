@@ -1,4 +1,3 @@
-<br>
 <div id="top"></div>
 <div class="nav-wrapper navbar-fixed-top">
     <nav class="navbar navbar-dark">
@@ -29,7 +28,7 @@
                     <a href="/License" class="dropdown-item">{$lang['page']['License']}</a>
                     <a to="#" @click.prevent="$modal.show('theseed-setting');" class="dropdown-item">설정</a>
                     {if count($wiki['session']['menus']) > 0}
-                            <a n:foreach="$wiki['session']['menus'] as $m" href="{$m['l']}" class="dropdown-item">{$m['t']}</a>
+                            <a n:foreach="$wiki['session']['menus'] as $m" href="{$m['l']}" class="dropdown-item">{$lang['menu'][$m['t']]}</a>
                     {/if}
                 </div>
             </li>
@@ -50,12 +49,12 @@
                         <div class="dropdown-divider"></div>
                         <a href="/member/starred_documents" class="dropdown-item">{$lang['page']['starred_documents']}</a>
                         <div class="dropdown-divider view-logout"></div>
-                        <a href="/member/logout?redirect=$wiki->request_uri" class="dropdown-item view-logout">{$lang-['auth']['logout']}</a>
+                        <a href="/member/logout?redirect={$request_uri}" class="dropdown-item view-logout">{$lang['auth']['logout']}</a>
                     </div>
                 </div>
-                <a href="/member/logout?redirect={$uri}" class="hide-logout logout-btn"><span class="fa fa-sign-out"></span></a>
+                <a href="/member/logout?redirect={$request_uri}" class="hide-logout logout-btn"><span class="fa fa-sign-out"></span></a>
             {else}
-                <a href="/member/login?redirect={$uri}" class="none-outline">
+                <a href="/member/login?redirect={$request_uri}" class="none-outline">
                     <span class="fa fa-sign-in"></span>
                 </a>
             {/if}
@@ -67,8 +66,8 @@
             <div class="input-group">
                 <input type="search" name="q" placeholder="검색" accesskey="f" class="form-control" id="searchInput" autocomplete="off">
                 <span class="input-group-btn">
-                    <button type="button" name="go" value="보기" id="searchGoButton" class="btn btn-secondary" onclick="onClickGo()"><span class="fa fa-eye"></span></button>
-                    <button type="button" name="fulltext" value="검색" id="searchSearchButton" class="btn btn-secondary" onclick="onClickSearch()"><span class="fa fa-search"></span></button>
+                    <button type="button" name="go" value="보기" id="searchGoButton" class="btn btn-secondary search-menu" onclick="onClickGo()"><span class="fa fa-eye"></span></button>
+                    <button type="button" name="fulltext" value="검색" id="searchSearchButton" class="btn btn-secondary search-menu" onclick="onClickSearch()"><span class="fa fa-search"></span></button>
                 </span>
             </div>
             <div n:if="$show" class="v-autocomplete-list">
@@ -102,7 +101,6 @@
                         <li><span class="recent-item">&nbsp;</span></li>
                         <li><span class="recent-item">&nbsp;</span></li>
                         <li><span class="recent-item">&nbsp;</span></li>
-                        
                         <li v-for="(r,i) in recent" v-bind:key="i"><nuxt-link class="recent-item" v-bind:key="r.document" :to="doc_action_link(r.document, 'w')">[<local-date :date="r.date" format="H:i:s" />] </nuxt-link></li>
                     </ul>
                 </div>
@@ -113,43 +111,52 @@
     </div>
     <div class="container-fluid liberty-content">
         <div class="liberty-content-header">
-            {if $wiki['page']['data']['document']}
             <div class="content-tools">
                 <div class="btn-group" role="group" aria-label="content-tools">
-                    <a href="/w/{rawurlencode($wiki['page']['full_title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['document']}</a>
-                    <a href="/edit/{rawurlencode($wiki['page']['full_title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['edit']}</a>
-                    <a href="/discuss/{rawurlencode($wiki['page']['full_title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['discuss']}</a>
-                    <a href="/history/{rawurlencode($wiki['page']['full_title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['history']}</a>
-                    <button type="button" class="btn btn-secondary tools-btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span class="caret"></span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" role="menu">
-                        <a href="/backlink/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">{$lang['btn']['backlink']}</a>
-                        <a href="/delete/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">{$lang['btn']['delete']}</a>
-                        <a href="/move/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">{$lang['btn']['move']}</a>
-                        <a href="/acl/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">{$lang['btn']['ACL']}</a>
-                        <a n:if="$wiki['page']['data']['user']" href="/contribution/author/{rawurlencode($wiki['page']['data']['document']['title'])}/document" class="dropdown-item">{$lang['page']['contribution']}</a>
+                {switch $wiki['page']['view_name']}
+                    {case 'edit'}
+                        <a href="/backlink/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['backlink']}</a>
+                        <a href="/delete/{=rawurlencode($uri_data['title'])}" class="btn btn-danger tools-btn">{$lang['btn']['delete']}</a>
+                        <a href="/move/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['move']}</a>
+                    {case 'wiki'}
                         {if $wiki['page']['data']['starred']}
-                            <a href="/member/unstar/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">
+                            <a href="/member/unstar/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">
                                 <span class="fa fa-star"></span>
                                 <span class="star-count">{$wiki['page']['data']['star_count']}</span>
                             </a>
                         {else}
-                            <a href="/member/star/{rawurlencode($wiki['page']['full_title'])}" class="dropdown-item">
+                            <a href="/member/star/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">
                                 <span class="fa fa-star-o"></span>
                                 <span class="star-count">{$wiki['page']['data']['star_count']}</span>
                             </a>
                         {/if}
-                        {if $wiki['page']['data']['menus']}
-                            <a n:foreach="$wiki['page']['data']['menus'] as $m" href="$m['to']" class="dropdown-item">{$m['title']}</a>
-                        {/if}
-                    </div>
+                        <a href="/backlink/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['backlink']}</a>
+                        <a href="/discuss/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['discuss']}</a>
+                        <a href="/edit/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['edit']}</a>
+                        <a href="/history/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['history']}</a>
+                        <a n:if="$wiki['page']['data']['user']" href="/contribution/author/{rawurlencode($wiki['page']['data']['document']['title'])}/document" class="btn btn-secondary tools-btn">{$lang['page']['contribution']}</a>
+                        <a href="/acl/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['ACL']}</a>
+                    {case 'history'}
+                        <a href="/edit/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['edit']}</a>
+                        <a href="/backlink/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['backlink']}</a>
+                    {case 'backlink'}
+                        <a href="/history/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['history']}</a>
+                        <a href="/edit/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['edit']}</a>
+                    {case 'thread'}
+                        <a href="/discuss/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['discuss_list']}</a>
+                {/switch}
                 </div>
             </div>
-            {/if}
             <div class="title">
                 <h1>
-                    {$wiki['page']['full_title']}
+                    {if $wiki['page']['data']['document']}
+                        <a href="/w/{$wiki['page']['title']|escapeUrl}">
+                            <span n:if="$wiki['page']['data']['document']['namespace'] !== $namespace['document']" class="namespace">{$wiki['page']['data']['document']['namespace']}:</span>{$wiki['page']['data']['document']['title']}
+                        </a>
+                        <small>({$wiki['page']['subtitle']})</small>
+                    {else}
+                        {$wiki['page']['title']}
+                    {/if}
                 </h1>
             </div>
         </div>
