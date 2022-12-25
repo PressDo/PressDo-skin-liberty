@@ -136,6 +136,10 @@
                         <a href="/history/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['history']}</a>
                         <a n:if="$wiki['page']['data']['user']" href="/contribution/author/{rawurlencode($wiki['page']['data']['document']['title'])}/document" class="btn btn-secondary tools-btn">{$lang['page']['contribution']}</a>
                         <a href="/acl/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['ACL']}</a>
+                    {case 'raw'}
+                        <a href="/history/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['history']}</a>
+                        <a href="/edit/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['edit']}</a>
+                        <a href="/backlink/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['backlink']}</a>
                     {case 'history'}
                         <a href="/edit/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['edit']}</a>
                         <a href="/backlink/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['backlink']}</a>
@@ -153,7 +157,7 @@
                         <a href="/w/{$wiki['page']['title']|escapeUrl}">
                             <span n:if="$wiki['page']['data']['document']['namespace'] !== $namespace['document']" class="namespace">{$wiki['page']['data']['document']['namespace']}:</span>{$wiki['page']['data']['document']['title']}
                         </a>
-                        <small>({$wiki['page']['subtitle']})</small>
+                        <small n:if="$wiki['page']['view_name'] !== 'wiki'">({$wiki['page']['subtitle']})</small>
                     {else}
                         {$wiki['page']['title']}
                     {/if}

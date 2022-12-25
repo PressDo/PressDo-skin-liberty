@@ -41,7 +41,7 @@ body.pressdo-dark-mode {
 .pressdo-dark-mode .Liberty .content-wrapper .liberty-content .liberty-content-header .content-tools .tools-btn:active,
 .pressdo-dark-mode .Liberty .content-wrapper .liberty-content .liberty-content-header .content-tools .tools-btn:focus,
 .pressdo-dark-mode .Liberty .content-wrapper .liberty-content .liberty-content-header .content-tools .tools-btn:hover {
-	background-color: #014841;
+	background-color: #383b40;
 }
 
 .pressdo-dark-mode a.btn.btn-secondary.tools-btn {
@@ -124,14 +124,9 @@ body.pressdo-dark-mode {
 	color: #ddd;
 }
 
-.pressdo-dark-mode .Liberty .nav-wrapper .navbar .form-inline .btn:focus, .pressdo-dark-mode .Liberty .nav-wrapper .navbar .form-inline .btn:hover {
-	background-color: #383b40;
-	border-color: #ddd;
-}
-
 .pressdo-dark-mode .Liberty .nav-wrapper .navbar .form-inline .btn:focus,
 .pressdo-dark-mode .Liberty .nav-wrapper .navbar .form-inline .btn:hover {
-	background-color: #014841;
+	background-color: #383b40;
 	border-color: #ddd;
 }
 
