@@ -138,7 +138,6 @@ html input[type=button]:hover, html input[type=submit]:hover, button:hover, #mw-
 }
 
 label {
-    vertical-align: middle;
     word-break: keep-all;
 }
 
@@ -207,6 +206,19 @@ del, s, strike {
     margin-top: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.Liberty .nav-wrapper .navbar .navbar-login .login-dropdown-menu .username {
+    cursor: default;
+    font-size: 1rem;
+    text-align: right;
+    white-space: unset;
+    word-break: break-all;
+}
+
+.Liberty .nav-wrapper .navbar .navbar-login .login-dropdown-menu .username:hover {
+    background-color: transparent;
+    color: #373a3c;
 }
 
 .Liberty .nav-wrapper .navbar .navbar-nav .nav-item .dropdown-toggle::after {

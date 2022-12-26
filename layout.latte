@@ -19,6 +19,7 @@
                 <div class="dropdown-menu" role="menu">
                     <a href="/NeededPages" class="dropdown-item">{$lang['page']['NeededPages']}</a>
                     <a href="/OrphanedPages" class="dropdown-item">{$lang['page']['OrphanedPages']}</a>
+                    <a href="/UncategorizedPages" class="dropdown-item">{$lang['page']['UncategorizedPages']}</a>
                     <a href="/OldPages" class="dropdown-item">{$lang['page']['OldPages']}</a>
                     <a href="/ShortestPages" class="dropdown-item">{$lang['page']['ShortestPages']}</a>
                     <a href="/LongestPages" class="dropdown-item">{$lang['page']['LongestPages']}</a>
@@ -26,7 +27,7 @@
                     <a href="/RandomPage" class="dropdown-item">{$lang['page']['RandomPage']}</a>
                     <a href="/Upload" class="dropdown-item">{$lang['page']['Upload']}</a>
                     <a href="/License" class="dropdown-item">{$lang['page']['License']}</a>
-                    <a to="#" @click.prevent="$modal.show('theseed-setting');" class="dropdown-item">설정</a>
+                    <div class="dropdown-divider"></div>
                     {if count($wiki['session']['menus']) > 0}
                             <a n:foreach="$wiki['session']['menus'] as $m" href="{$m['l']}" class="dropdown-item">{$lang['menu'][$m['t']]}</a>
                     {/if}
@@ -40,19 +41,23 @@
                         <img class="profile-img" src="{$wiki['session']['member']['gravatar_url']}">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right login-dropdown-menu" aria-labelledby="login-menu">
-                        <a href="/w/{rawurlencode($namespace['user'].':'.$wiki['session']['member']['username'])}" class="dropdown-item">{$wiki['session']['member']['username']}</a>
+                        <div class="username dropdown-item">
+                            <b>{$wiki['session']['member']['username']}</b><br>
+                            {$wiki['session']['member']['admin']? 'Admin':'Member'}
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a to="#" @click.prevent="$modal.show('theseed-setting');" class="dropdown-item">설정</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="/member/mypage" class="dropdown-item">{$lang['page']['mypage']}</a>
+                        <a href="/w/{rawurlencode($namespace['user'].':'.$wiki['session']['member']['username'])}" class="dropdown-item">{$lang['menu']['my_user_document']}</a>
+                        <a href="/member/starred_documents" class="dropdown-item">{$lang['page']['starred_documents']}</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/contribution/author/{$wiki['session']['member']['username']}/document">{$lang['page']['contribution_document']}</a>
                         <a class="dropdown-item" href="/contribution/author/{$wiki['session']['member']['username']}/discuss">{$lang['page']['contribution_discuss']}</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="/member/mypage" class="dropdown-item">{$lang['page']['mypage']}</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="/member/starred_documents" class="dropdown-item">{$lang['page']['starred_documents']}</a>
                         <div class="dropdown-divider view-logout"></div>
                         <a href="/member/logout?redirect={$request_uri}" class="dropdown-item view-logout">{$lang['auth']['logout']}</a>
                     </div>
                 </div>
-                <a href="/member/logout?redirect={$request_uri}" class="hide-logout logout-btn"><span class="fa fa-sign-out"></span></a>
             {else}
                 <a href="/member/login?redirect={$request_uri}" class="none-outline">
                     <span class="fa fa-sign-in"></span>

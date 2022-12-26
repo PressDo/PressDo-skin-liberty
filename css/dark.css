@@ -102,6 +102,10 @@ body.pressdo-dark-mode {
 	background-color: black;
 }
 
+.pressdo-dark-mode .dropdown-menu .dropdown-item:hover {
+	background-color:#383b40;
+}
+
 .pressdo-dark-mode .liberty-content-main.wiki-article a {
 	color: #E69720;
 }
@@ -134,6 +138,10 @@ body.pressdo-dark-mode {
 	background-color: #383b40;
 }
 
+.pressdo-dark-mode .Liberty .nav-wrapper .navbar .navbar-login .login-dropdown-menu .username,
+.pressdo-dark-mode .Liberty .nav-wrapper .navbar .navbar-login .login-dropdown-menu .username:hover {
+	color: #ddd;
+}
 .pressdo-dark-mode div#bottom a {
 	color: #E69720;
 }
