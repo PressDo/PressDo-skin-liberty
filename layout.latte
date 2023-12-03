@@ -116,6 +116,18 @@
     </div>
     <div class="container-fluid liberty-content">
         <div class="liberty-content-header">
+            <div class="title">
+                <h1>
+                    {if $wiki['page']['data']['document']}
+                        <a href="/w/{$wiki['page']['title']|escapeUrl}">
+                            <span n:if="$wiki['page']['data']['document']['namespace'] !== $namespace['document']" class="namespace">{$wiki['page']['data']['document']['namespace']}:</span>{$wiki['page']['data']['document']['title']}
+                        </a>
+                        <small n:if="$wiki['page']['view_name'] !== 'wiki'">({$wiki['page']['subtitle']})</small>
+                    {else}
+                        {$wiki['page']['title']}
+                    {/if}
+                </h1>
+            </div>
             <div class="content-tools">
                 <div class="btn-group" role="group" aria-label="content-tools">
                 {switch $wiki['page']['view_name']}
@@ -155,18 +167,6 @@
                         <a href="/discuss/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['discuss_list']}</a>
                 {/switch}
                 </div>
-            </div>
-            <div class="title">
-                <h1>
-                    {if $wiki['page']['data']['document']}
-                        <a href="/w/{$wiki['page']['title']|escapeUrl}">
-                            <span n:if="$wiki['page']['data']['document']['namespace'] !== $namespace['document']" class="namespace">{$wiki['page']['data']['document']['namespace']}:</span>{$wiki['page']['data']['document']['title']}
-                        </a>
-                        <small n:if="$wiki['page']['view_name'] !== 'wiki'">({$wiki['page']['subtitle']})</small>
-                    {else}
-                        {$wiki['page']['title']}
-                    {/if}
-                </h1>
             </div>
         </div>
         <div class="liberty-content-main wiki-article">

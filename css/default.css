@@ -754,7 +754,7 @@ div.scroll-buttons {
     .Liberty .content-wrapper .liberty-content .liberty-content-header .content-tools {
         float: none;
         text-align: right;
-        border-bottom: 1px solid #e1e8ed;
+        border-top: 1px solid #e1e8ed;
         padding: 0.5rem;
     }
 
