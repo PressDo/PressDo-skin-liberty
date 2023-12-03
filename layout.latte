@@ -128,7 +128,7 @@
                     {/if}
                 </h1>
             </div>
-            <div class="content-tools">
+            <div n:if="$wiki['page']['view_name']" class="content-tools">
                 <div class="btn-group" role="group" aria-label="content-tools">
                 {switch $wiki['page']['view_name']}
                     {case 'edit'}

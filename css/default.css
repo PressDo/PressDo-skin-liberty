@@ -496,6 +496,11 @@ del, s, strike {
     font-size: 0.9rem;
     padding: 0.4rem 0.8rem;
 }
+.Liberty .content-wrapper .liberty-content .liberty-content-header .content-tools .tools-btn .fa-star,
+.Liberty .content-wrapper .liberty-content .liberty-content-header .content-tools .tools-btn .fa-star-o {
+    color: #ff6200;
+    margin-right: .1em;
+}
 
 .Liberty .content-wrapper .liberty-content .liberty-content-header .content-tools .dropdown-toggle {
     padding: 0.4rem 0.3rem;
