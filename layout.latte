@@ -1,7 +1,7 @@
 <div id="top"></div>
-<div class="nav-wrapper navbar-fixed-top">
+<div n:class="$settings['liberty']['fixed_navbar'] === true ? navbar-fixed-top, nav-wrapper">
     <nav class="navbar navbar-dark">
-        <a class="navbar-brand" href="/">PressDoWiki</a>
+        <a class="navbar-brand" href="/">{$config['title_text']}</a>
         <ul class="nav navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="/RecentChanges"><span class="fa fa-refresh"></span><span class="hide-title">{$lang['menu']['RecentChanges']}</span></a>
@@ -27,42 +27,54 @@
                     <a href="/RandomPage" class="dropdown-item">{$lang['page']['RandomPage']}</a>
                     <a href="/Upload" class="dropdown-item">{$lang['page']['Upload']}</a>
                     <a href="/License" class="dropdown-item">{$lang['page']['License']}</a>
-                    <div class="dropdown-divider"></div>
                     {if count($wiki['session']['menus']) > 0}
-                            <a n:foreach="$wiki['session']['menus'] as $m" href="{$m['l']}" class="dropdown-item">{$lang['menu'][$m['t']]}</a>
+                        <div class="dropdown-divider"></div>
+                        <a n:foreach="$wiki['session']['menus'] as $m" href="{$m['l']}" class="dropdown-item">{$lang['menu'][$m['t']]}</a>
                     {/if}
                 </div>
             </li>
         </ul>
         <div class="navbar-login">
+            <div class="dropdown login-menu">
             {if $wiki['session']['member']}
-                <div class="dropdown login-menu">
-                    <a class="dropdown-toggle" type="button" id="login-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="profile-img" src="{$wiki['session']['member']['gravatar_url']}">
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right login-dropdown-menu" aria-labelledby="login-menu">
-                        <div class="username dropdown-item">
-                            <b>{$wiki['session']['member']['username']}</b><br>
-                            {$wiki['session']['member']['admin']? 'Admin':'Member'}
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        <a to="#" @click.prevent="$modal.show('theseed-setting');" class="dropdown-item">설정</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="/member/mypage" class="dropdown-item">{$lang['page']['mypage']}</a>
-                        <a href="/w/{rawurlencode($namespace['user'].':'.$wiki['session']['member']['username'])}" class="dropdown-item">{$lang['menu']['my_user_document']}</a>
-                        <a href="/member/starred_documents" class="dropdown-item">{$lang['page']['starred_documents']}</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/contribution/author/{$wiki['session']['member']['username']}/document">{$lang['page']['contribution_document']}</a>
-                        <a class="dropdown-item" href="/contribution/author/{$wiki['session']['member']['username']}/discuss">{$lang['page']['contribution_discuss']}</a>
-                        <div class="dropdown-divider view-logout"></div>
-                        <a href="/member/logout?redirect={$request_uri}" class="dropdown-item view-logout">{$lang['auth']['logout']}</a>
+                <a class="dropdown-toggle" type="button" id="login-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="profile-img" src="{$wiki['session']['member']['gravatar_url']}">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right login-dropdown-menu" aria-labelledby="login-menu">
+                    <div class="username dropdown-item">
+                        <b>{$wiki['session']['member']['username']}</b><br>
+                        {$wiki['session']['member']['admin']? 'Admin':'Member'}
                     </div>
+                    <div class="dropdown-divider"></div>
+                    <a to="#" @click.prevent="$modal.show('theseed-setting');" class="dropdown-item">설정</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/member/mypage" class="dropdown-item">{$lang['page']['mypage']}</a>
+                    <a href="/w/{rawurlencode($namespace['user'].':'.$wiki['session']['member']['username'])}" class="dropdown-item">{$lang['menu']['my_user_document']}</a>
+                    <a href="/member/starred_documents" class="dropdown-item">{$lang['page']['starred_documents']}</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/contribution/author/{$wiki['session']['member']['username']}/document">{$lang['page']['contribution_document']}</a>
+                    <a class="dropdown-item" href="/contribution/author/{$wiki['session']['member']['username']}/discuss">{$lang['page']['contribution_discuss']}</a>
+                    <div class="dropdown-divider view-logout"></div>
+                    <a href="/member/logout?redirect={$request_uri}" class="dropdown-item view-logout">{$lang['auth']['logout']}</a>
                 </div>
             {else}
-                <a href="/member/login?redirect={$request_uri}" class="none-outline">
-                    <span class="fa fa-sign-in"></span>
+                <a class="dropdown-toggle" type="button" id="login-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="fa fa-user"></span>
                 </a>
+                <div class="dropdown-menu dropdown-menu-right login-dropdown-menu" aria-labelledby="login-menu">
+                    <div class="username dropdown-item">
+                        <b>{$wiki['session']['ip']}</b><br>
+                        Please login!
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a to="#" @click.prevent="$modal.show('theseed-setting');" class="dropdown-item">설정</a>
+                    <!--a to="#" @click.prevent="$modal.show('theseed-setting');" class="dropdown-item">라이트 테마로</a-->
+                    <!--a to="#" @click.prevent="$modal.show('theseed-setting');" class="dropdown-item">다크 테마로</a-->
+                    <div class="dropdown-divider"></div>
+                    <a href="/member/login?redirect={$request_uri}" class="dropdown-item">{$lang['auth']['login']}</a>
+                </div>
             {/if}
+            </div>
         </div>
         <div id="pt-notifications" class="navbar-notification">
             <a href="#"><span class="label label-danger"></span></a>
@@ -71,8 +83,8 @@
             <div class="input-group">
                 <input type="search" name="q" placeholder="검색" accesskey="f" class="form-control" id="searchInput" autocomplete="off">
                 <span class="input-group-btn">
-                    <button type="button" name="go" value="보기" id="searchGoButton" class="btn btn-secondary search-menu" onclick="onClickGo()"><span class="fa fa-eye"></span></button>
                     <button type="button" name="fulltext" value="검색" id="searchSearchButton" class="btn btn-secondary search-menu" onclick="onClickSearch()"><span class="fa fa-search"></span></button>
+                    <button type="button" name="go" value="보기" id="searchGoButton" class="btn btn-secondary search-menu" onclick="onClickGo()"><span class="fa fa-arrow-right"></span></button>
                 </span>
             </div>
             <div n:if="$show" class="v-autocomplete-list">
@@ -110,26 +122,14 @@
                     </ul>
                 </div>
                 <div class="live-recent-footer">
-                    <a href="/RecentChanges" title="최근 변경내역"><span class="label label-info">더보기</span></a> </div>
+                    <a href="/RecentChanges" title="최근 변경내역"><span class="label label-info">더 보기</span></a> </div>
             </div>
         </div>
     </div>
     <div class="container-fluid liberty-content">
         <div class="liberty-content-header">
-            <div class="title">
-                <h1>
-                    {if $wiki['page']['data']['document']}
-                        <a href="/w/{$wiki['page']['title']|escapeUrl}">
-                            <span n:if="$wiki['page']['data']['document']['namespace'] !== $namespace['document']" class="namespace">{$wiki['page']['data']['document']['namespace']}:</span>{$wiki['page']['data']['document']['title']}
-                        </a>
-                        <small n:if="$wiki['page']['view_name'] !== 'wiki'">({$wiki['page']['subtitle']})</small>
-                    {else}
-                        {$wiki['page']['title']}
-                    {/if}
-                </h1>
-            </div>
-            <div n:if="$wiki['page']['view_name']" class="content-tools">
-                <div class="btn-group" role="group" aria-label="content-tools">
+            <div n:if="$uri_data['title']" class="content-tools">
+                <div class="btn-group">
                 {switch $wiki['page']['view_name']}
                     {case 'edit'}
                         <a href="/backlink/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['backlink']}</a>
@@ -149,17 +149,20 @@
                         {/if}
                         <a href="/backlink/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['backlink']}</a>
                         <a href="/discuss/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['discuss']}</a>
-                        <a href="/edit/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['edit']}</a>
+                        <a href="/edit/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn"><span class="fa fa-edit"></span>{$lang['btn']['edit']}</a>
                         <a href="/history/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['history']}</a>
                         <a n:if="$wiki['page']['data']['user']" href="/contribution/author/{rawurlencode($wiki['page']['data']['document']['title'])}/document" class="btn btn-secondary tools-btn">{$lang['page']['contribution']}</a>
                         <a href="/acl/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['ACL']}</a>
                     {case 'raw'}
                         <a href="/history/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['history']}</a>
-                        <a href="/edit/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['edit']}</a>
-                        <a href="/backlink/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['backlink']}</a>
+                        <a href="/w/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['document']}</a>
+                        <a href="/blame/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['blame']}</a>
+                        <a href="/revert/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['revert']}</a>
+                        <a href="/diff/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['diff']}</a>
                     {case 'history'}
+                        <a href="/discuss/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['discuss']}</a>
                         <a href="/edit/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['edit']}</a>
-                        <a href="/backlink/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['backlink']}</a>
+                        <a href="/acl/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">ACL</a>
                     {case 'backlink'}
                         <a href="/history/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['history']}</a>
                         <a href="/edit/{=rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['edit']}</a>
@@ -167,6 +170,18 @@
                         <a href="/discuss/{rawurlencode($uri_data['title'])}" class="btn btn-secondary tools-btn">{$lang['btn']['discuss_list']}</a>
                 {/switch}
                 </div>
+            </div>
+            <div class="title">
+                <h1>
+                    {if $wiki['page']['data']['document']}
+                        <a href="/w/{$wiki['page']['title']|escapeUrl}">
+                            <span n:if="$wiki['page']['data']['document']['namespace'] !== $namespace['document']" class="namespace">{$wiki['page']['data']['document']['namespace']}:</span>{$wiki['page']['data']['document']['title']}
+                        </a>
+                        <small n:if="$wiki['page']['view_name'] !== 'wiki'">({$wiki['page']['subtitle']})</small>
+                    {else}
+                        {$wiki['page']['title']}
+                    {/if}
+                </h1>
             </div>
         </div>
         <div class="liberty-content-main wiki-article">
@@ -180,9 +195,9 @@
             {$innerLayout|noescape}{$innerBlock|noescape}
         </div>
         <div class="liberty-footer" id="bottom">
-            <ul class="footer-info" n:if="$wiki->page->view_name === 'wiki' && $wiki['page']['data']['date']">
-                <li class="footer-info-lastmod">{$lang-['document']['lastchanged']|replace: '@1@', '<time datetime="'.date("Y-m-d\TH:i:s", $wiki['page']['data']['date'] - 32400).'.000Z'.'">'.date("Y-m-d H:i:s", $wiki['page']['data']['date']).'</time>'|noescape}</li>
-                <li class="footer-info-copyright">{$config['copyright_text']|noescape}</li>
+            <ul class="footer-info" n:if="$wiki['page']['view_name'] === 'wiki' && $wiki['page']['data']['date']">
+                <li class="footer-info-lastmod">이 문서는 <time datetime="{date('Y-m-d\TH:i:s', $wiki['page']['data']['date'] - 32400)}.000Z">{date("Y-m-d H:i:s", $wiki['page']['data']['date'])}</time>에 마지막으로 편집되었습니다.</li>
+                <li class="footer-info-copyright">{$config['wiki']['copyright_text']|noescape}</li>
             </ul>
             <ul class="footer-places">
             {*
@@ -222,3 +237,11 @@
     <a class="scroll-button" href="#top" id="left"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
     <a class="scroll-bottom" href="#bottom" id="right"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
 </div>
+<style>
+@import "/skins/liberty/css/bootstrap.min.css";
+@import "/skins/liberty/css/font-awesome.min.css";
+@import "/skins/liberty/css/font/Noto Sans KR.css";
+@import "/skins/liberty/css/default.css";
+@import "/skins/liberty/css/default_mobile.css";
+@import "/skins/liberty/css/dark.css";
+</style>

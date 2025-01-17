@@ -1,50 +1,20 @@
 {
     "main_color": "#4188F1",
     "sub_color": "#2774DC",
-    "override_views": [
+	"js": [
+		{
+			"path": "js/jquery-2.2.4.min.js"
+		},
+		{
+			"path": "js/tether.min.js"
+		},
+		{
+			"path": "js/bootstrap.min.js"
+		},
+		{
+			"path": "js/layout.js"
+		}
 	],
-	"static_files": [
-		"css/font-awesome.min.css",
-		"css/font/Noto Sans KR.css",
-		"css/default.css",
-		"css/theseed.css",
-		"css/dark.css",
-		"css/jquery-ui.min.css",
-		"bootstrap/css/bootstrap.min.css",
-		"bootstrap/js/bootstrap.min.js",
-		"js/lib/jquery-2.2.4.min.js",
-		"js/layout.js",
-		"js/tether.min.js"
-	],
-	"auto_js_targets": {
-		"*": [
-			{
-				"path": "js/jquery-2.2.4.min.js"
-			},
-			{
-				"path": "js/tether.min.js"
-			},
-			{
-				"path": "bootstrap/js/bootstrap.min.js"
-			},
-			{
-				"path": "js/layout.js"
-			}
-		]
-	},
-	"auto_css_targets": {
-		"*": [
-			"css/font-awesome.min.css",
-			"css/jquery-ui.min.css",
-			"bootstrap/css/bootstrap.min.css",
-			"css/font/Noto Sans KR.css",
-			"css/default.css",
-			"css/theseed.css",
-			"css/dark.css"
-		]
-	},
-	"manual_file_targets": {
-	},
 	"body_classes": [
 		"Liberty"
 	],
